@@ -1,0 +1,251 @@
+
+$strip-width: 170px;
+$strip-height: 300px;
+$strip-offset-h: $strip-width - 80px;
+$lens-diameter: 290px;
+
+.pg-project--css-camera {
+	.camera-wrapper {
+		position: relative;
+		width: 840px;
+		height: 640px;
+	}
+
+	.camera-body {
+
+		position: relative;
+		display: inline-block;
+		z-index: 2;
+		margin: auto;
+		width: 470px;
+		height: 300px;
+		top: 100px;
+		border-radius: 40px;
+		background-color: #444;
+		border: solid #333 10px;
+
+		box-shadow: 5px 5px 0px 3px #393939;
+
+		.camera-stripe {
+			height: 150px;
+			position: absolute;
+			width: 100%;
+			top: 50%;
+			transform: translateY(-50%);
+			background-color: #3b3b3b;
+			border-top: 10px solid #393939;
+			border-bottom: 10px solid #393939;
+		}
+
+		.camera-strip {
+			position: absolute;
+			right: $strip-offset-h;
+			top: -90px;
+			width: $strip-width;
+			height: $strip-height;
+			border-radius: 30px 30px 0 0;
+
+			background-color: #333;
+			border: 5px solid #292929;
+			border-bottom-style: none;
+
+			box-shadow: 2px 2px 1px 2px #292929;
+
+			.camera-flash {
+				width: 130px;
+				height: 40px;
+				margin: 15px auto;
+				border-radius: 10px 10px 5px 5px;
+				background-color: #ccc;
+				border: solid 5px #aaa;
+
+				&.flashing {
+					animation-name: flash;
+					animation-duration: 0.5s;
+					animation-timing-function: ease;
+				}
+
+				@keyframes flash {
+					0% {
+						box-shadow: inherit;
+						background-color: #ccc;
+						border: solid 5px #aaa;
+					}
+					50% {
+						box-shadow: 0px 0px 30px 25px #fff;
+						background-color: #fff;
+						border: none;
+					}
+					100% {
+						box-shadow: inherit;
+						background-color: #ccc;
+						border: solid 5px #aaa;
+					}
+				}
+			}
+		}
+
+		.camera-grip {
+			position: relative;
+			height: 100%;
+			width: 90px;
+			background-color: #4c4c4c;
+			border-radius: 30px 0 0 30px;
+			border-right: 2px solid #333;
+			box-shadow: 8px 0px 10px 0px #333;
+		}
+	}
+
+	.camera-lens {
+		position: absolute;
+		width: $lens-diameter;
+		height: $lens-diameter;
+		right: (($strip-width / 2) + ($strip-offset-h)) - ($lens-diameter / 2); // Distance to center of strip, minus lens diameter to give right edge offset
+		top: 50%;
+		transform: translateY(-50%);
+		border-radius: $lens-diameter / 2;
+		border: 2px solid #d22;
+		background-color: #212121;
+		box-shadow: 3px 3px 3px 6px #292929;
+
+		.lens-insets {
+			position: relative;
+			width: 100%;
+			height: 100%;
+
+			* {
+				margin: 50% auto;
+				transform: translateY(-50%);
+			}
+
+			@mixin lenses($diameter, $border-radius, $border, $bg-color) {
+				width: $diameter; //200px
+				height: $diameter; // 200px
+				border-radius: $border-radius; // 100px
+				border: $border; // 2px solid rgb(20, 20, 20);
+				background-color: $bg-color; // rgb(50, 50, 50);
+			}
+
+			.lens-inset-1 {
+				@include lenses(
+					270px,
+					135px,
+					2px solid rgb(20, 20, 20),
+					rgb(50, 50, 50)
+				);
+			}
+			.lens-inset-2 {
+				@include lenses(
+					220px,
+					110px,
+					4px solid rgb(30, 30, 30),
+					rgb(11, 11, 11)
+				);
+			}
+			.lens-inset-3 {
+				@include lenses(
+					100px,
+					50px,
+					2px solid rgb(30, 30, 30),
+					rgb(25, 25, 25)
+				);
+			}
+			.lens-inset-4 {
+				@include lenses(
+					50px,
+					25px,
+					8px solid rgb(35, 35, 35),
+					rgb(15, 15, 15)
+				);
+			}
+			.lens-inset-5 {
+				@include lenses(
+					4px,
+					2px,
+					0px none rgb(0, 0, 0),
+					rgb(240, 240, 240)
+				);
+			}
+		}
+	}
+
+	.camera-button {
+		position: absolute;
+		background-color: #333;
+		top: -35px;
+		left: 10px;
+		height: 35px;
+		width: 70px;
+		border-radius: 10px 10px 0 0;
+		border-top: solid 4px #F33;
+		transition: top 0.8s, height 0.8s;
+
+		&.pressed {
+			top: -17px;
+			height: 17px;
+		}
+	}
+
+	.camera-screen {
+		z-index: 1;
+		position: relative;
+		display: inline-block;
+		margin: auto;
+
+		width: 350px;
+		height: 250px;
+		top: 90px;
+		left: 13px;
+
+		border-radius: 40px;
+		background-color: #444;
+		border: solid #333 10px;
+		box-shadow: 3px 3px 0px 1px #393939;
+
+		transform: rotateY(100deg);
+		transform-origin: left;
+		transform: translateX(-10%) rotateY(100deg);
+
+		transition: transform 1s;
+		transition-delay: 0.7s;
+
+		&.flipped {
+			transform: rotateY(0);
+			transform-origin: left;
+			transform: translateX(0%);
+		}
+
+		.screen-hinge {
+			position: absolute;
+			width: 20px;
+			height: 100px;
+			background: #333;
+			left: -25px;
+			top: 50%;
+			transform: translate(0, -50%);
+		}
+
+		a {
+			text-align: center;
+			display: block;
+			width: 100%;
+			height: 100%;
+
+			.screen-display {
+				position: absolute;
+				width: 90%;
+				height: 85%;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				border-radius: 10px;
+				border: 10px solid #555;
+				background-color: #555;
+				background-image: url("ENTER YOUR IMAGE HERE");
+				background-size: contain;
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+		}
+	}
+}
